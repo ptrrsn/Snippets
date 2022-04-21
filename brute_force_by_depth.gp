@@ -12,7 +12,12 @@
     \\ count = 0; brute_force_by_depth(15, (bitmask)->count++); print(count)
     brute_force_by_depth(weight, func) =
         for (number_of_ones = 1, weight,
+            \\ The variable bitmask is initialized with the smallest possible number
+            \\ that has number_of_ones bits of 1s in the binary representation.
             bitmask = (1 << (weight - 1)) + (1 << (number_of_ones - 1)) - 1;
+
+            \\ Loop until bitmask is greater than the biggest possible number that has
+            \\ number_of_ones bits of 1s in the binary representation.
             until (bitmask > ((1 << number_of_ones) - 1) << (weight - number_of_ones),
                 func(bitmask);
  
@@ -31,8 +36,8 @@
 
                 \\ Consider the case 100111100 above. The next bitmask can be
                 \\ constructed by splitting the last_group_of_ones so that we
-                \\ shift the left most 1 of the last_group_of_ones and shift
-                \\ the rest to the right most bits: 10100111.
+                \\ shift the left most 1 of the last_group_of_ones one bit to the
+                \\ left and shift the rest to the right most bits: 10100111.
                 \\ Another example, 101100011100. Then, we will split the group
                 \\ of 111 to be: 101100100011.
 
@@ -41,12 +46,14 @@
                 \\ For example, 101100011100 becomes 101100100000.
                 bitmask = bitmask + last_one;
 
-                \\ Then we add the remaining of the last_group_of_ones to the
-                \\ right-most bits. Notes that this trick below will also work
-                \\ even if last_group_of_ones contains only one bit of 1.
+                \\ Finally, we add the remaining of the last_group_of_ones to
+                \\ right-most bits. Notes that the trick below will also work
+                \\ even when last_group_of_ones contains only one bit of 1.
+                \\ For example, the previous line will change 101100011100
+                \\ to 101100100000. This line now will add the remaining bits
+                \\ to be 101100100011.
+                \\ Here, bitmask is now the next bitmask of the original one.
                 bitmask = bitmask + ((last_group_of_ones / last_one) >> 1);
-                
-                \\ Here, bitmask is the next bitmask.
             )
         )
 }
