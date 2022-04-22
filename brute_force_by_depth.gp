@@ -7,13 +7,13 @@
     \\ Loop through all possible indices with certain weight, sorted by depth.
     \\ For example, to print the bitmasks in binary notations:
     \\ weight = 5;
-    \\ for (depth = 1, weight, brute_force_by_depth(weight, (bitmask)->print(binary(bitmask))))
+    \\ for (depth = 1, weight, for_each(weight, (bitmask)->print(binary(bitmask))))
     \\ As another example, to count the number of bitmasks generated (for sanity
     \\ check):
     \\ weight = 15; count = 0;
-    \\ for (depth = 1, weight, brute_force_by_depth(weight, (bitmask)->count++));
+    \\ for (depth = 1, weight, for_each(weight, (bitmask)->count++));
     \\ print(count)
-    brute_force_by_depth(weight, depth, func) =
+    for_each(weight, depth, func) =
         number_of_ones = depth;
         \\ The variable bitmask is initialized with the smallest possible number
         \\ that has number_of_ones bits of 1s in the binary representation.
