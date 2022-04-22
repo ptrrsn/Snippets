@@ -7,11 +7,11 @@
     \\ Loop through all possible indices with certain weight, sorted by depth.
     \\ For example, to print the bitmasks in binary notations:
     \\ weight = 5;
-    \\ for (depth = 1, weight, for_each(weight, (bitmask)->print(binary(bitmask))))
+    \\ for (depth = 1, weight, for_each(weight, depth, (bitmask)->print(binary(bitmask))))
     \\ As another example, to count the number of bitmasks generated (for sanity
     \\ check):
     \\ weight = 15; count = 0;
-    \\ for (depth = 1, weight, for_each(weight, (bitmask)->count++));
+    \\ for (depth = 1, weight, for_each(weight, depth, (bitmask)->count++));
     \\ print(count)
     for_each(weight, depth, func) =
         number_of_ones = depth;
@@ -56,7 +56,6 @@
             \\ to 101100100000. This line now will add the remaining bits
             \\ to be 101100100011.
             \\ Here, bitmask is now the next bitmask of the original one.
-            bitmask = bitmask + ((last_group_of_ones / last_one) >> 1);
+            bitmask = bitmask + ((last_group_of_ones / last_one) >> 1)
         )
-    )
 }
