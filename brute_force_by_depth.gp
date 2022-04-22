@@ -13,13 +13,13 @@
     \\ weight = 15; count = 0;
     \\ for (depth = 1, weight, for_each(weight, depth, (bitmask)->count++));
     \\ print(count)
-    \\ MZV bases calculation based on Prof. Tasaka's implementation in the slide
+    \\ MZV basis calculation based on Prof. Tasaka's implementation in the slide
     \\ http://www.ist.aichi-pu.ac.jp/~tasaka/CoMZ_beamer_tasaka.pdf
     /*
         {
-            MZV_bases(weight) =
-                bases_in_real_with_sentinel = [Pi];
-                bases = [];
+            MZV_basis(weight) =
+                basis_in_real_with_sentinel = [Pi];
+                basis = [];
                 for (depth = 1, weight, for_each(weight, depth,
                     (bitmask)->
                         remaining_bits = weight;
@@ -33,15 +33,15 @@
                             )
                         );
                         if (index[1] >= 2,
-                            concattenated_bases_in_real_with_sentinel = concat(bases_in_real_with_sentinel, zetamult(index));
-                            if (lindep(concattenated_bases_in_real_with_sentinel)[1] != 0,
-                                bases_in_real_with_sentinel = concattenated_bases_in_real_with_sentinel;
-                                bases = concat(bases, [index]))
+                            concattenated_basis_in_real_with_sentinel = concat(basis_in_real_with_sentinel, zetamult(index));
+                            if (lindep(concattenated_basis_in_real_with_sentinel)[1] != 0,
+                                basis_in_real_with_sentinel = concattenated_basis_in_real_with_sentinel;
+                                basis = concat(basis, [index]))
                         )
                 ));
-                bases;
+                basis;
         }
-        MZV_bases(5)
+        MZV_basis(5)
     */
     for_each(weight, depth, func) =
         number_of_ones = depth;
