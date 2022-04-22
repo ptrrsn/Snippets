@@ -13,6 +13,36 @@
     \\ weight = 15; count = 0;
     \\ for (depth = 1, weight, for_each(weight, depth, (bitmask)->count++));
     \\ print(count)
+    \\ MZV bases calculation based on Prof. Tasaka's implementation in the slide
+    \\ http://www.ist.aichi-pu.ac.jp/~tasaka/CoMZ_beamer_tasaka.pdf
+    /*
+        {
+            MZV_bases(weight) =
+                bases_in_real_with_sentinel = [Pi];
+                bases = [];
+                for (depth = 1, weight, for_each(weight, depth,
+                    (bitmask)->
+                        remaining_bits = weight;
+                        previous = -1;
+                        index = [];
+                        for (i = 0, weight,
+                            if (bitand(bitmask, 1 << i) > 0,
+                                index = concat(index, i - previous);
+                                remaining_bits -= (i - previous);
+                                previous = i
+                            )
+                        );
+                        if (index[1] >= 2,
+                            concattenated_bases_in_real_with_sentinel = concat(bases_in_real_with_sentinel, zetamult(index));
+                            if (lindep(concattenated_bases_in_real_with_sentinel)[1] != 0,
+                                bases_in_real_with_sentinel = concattenated_bases_in_real_with_sentinel;
+                                bases = concat(bases, [index]))
+                        )
+                ));
+                bases;
+        }
+        MZV_bases(5)
+    */
     for_each(weight, depth, func) =
         number_of_ones = depth;
         \\ The variable bitmask is initialized with the smallest possible number
