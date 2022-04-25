@@ -1,5 +1,5 @@
 /*
- * Multiple Zeta Value Library - Function(s) related to Multiple Zeta Value
+ * Multiple Zeta Value Library - Function(s) related to Multiple Zeta Value.
  * Written in 2022 by Risan ptrrsn.1@gmail.com
  * To the extent possible under law, the author(s) have dedicated all copyright and related
  * and neighboring rights to this software to the public domain worldwide. This software is
