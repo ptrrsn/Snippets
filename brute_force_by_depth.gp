@@ -8,46 +8,47 @@
  * software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
  */
 
+\\ Loop through all possible indices with certain weight, sorted by depth.
+\\ For example, to print the bitmasks in binary notations:
+\\ weight = 5;
+\\ for (depth = 1, weight, for_each(weight, depth, (bitmask)->print(binary(bitmask))))
+\\ As another example, to count the number of bitmasks generated (for sanity
+\\ check):
+\\ weight = 15; count = 0;
+\\ for (depth = 1, weight, for_each(weight, depth, (bitmask)->count++));
+\\ print(count)
+\\ MZV basis calculation based on Prof. Tasaka's implementation in the slide
+\\ http://www.ist.aichi-pu.ac.jp/~tasaka/CoMZ_beamer_tasaka.pdf
+/*
 {
-    \\ Loop through all possible indices with certain weight, sorted by depth.
-    \\ For example, to print the bitmasks in binary notations:
-    \\ weight = 5;
-    \\ for (depth = 1, weight, for_each(weight, depth, (bitmask)->print(binary(bitmask))))
-    \\ As another example, to count the number of bitmasks generated (for sanity
-    \\ check):
-    \\ weight = 15; count = 0;
-    \\ for (depth = 1, weight, for_each(weight, depth, (bitmask)->count++));
-    \\ print(count)
-    \\ MZV basis calculation based on Prof. Tasaka's implementation in the slide
-    \\ http://www.ist.aichi-pu.ac.jp/~tasaka/CoMZ_beamer_tasaka.pdf
-    /*
-        {
-            MZV_basis(weight) =
-                basis_in_real_with_sentinel = [Pi];
-                basis = [];
-                for (depth = 1, weight, for_each(weight, depth,
-                    (bitmask)->
-                        remaining_bits = weight;
-                        previous = -1;
-                        index = [];
-                        for (i = 0, weight,
-                            if (bitand(bitmask, 1 << i) > 0,
-                                index = concat(index, i - previous);
-                                remaining_bits -= (i - previous);
-                                previous = i
-                            )
-                        );
-                        if (index[1] >= 2,
-                            concattenated_basis_in_real_with_sentinel = concat(basis_in_real_with_sentinel, zetamult(index));
-                            if (lindep(concattenated_basis_in_real_with_sentinel)[1] != 0,
-                                basis_in_real_with_sentinel = concattenated_basis_in_real_with_sentinel;
-                                basis = concat(basis, [index]))
-                        )
-                ));
-                basis;
-        }
-        MZV_basis(5)
-    */
+    MZV_basis(weight) =
+        basis_in_real_with_sentinel = [Pi];
+        basis = [];
+        for (depth = 1, weight, for_each(weight, depth,
+            (bitmask)->
+                remaining_bits = weight;
+                previous = -1;
+                index = [];
+                for (i = 0, weight,
+                    if (bitand(bitmask, 1 << i) > 0,
+                        index = concat(index, i - previous);
+                        remaining_bits -= (i - previous);
+                        previous = i
+                    )
+                );
+                if (index[1] >= 2,
+                    concattenated_basis_in_real_with_sentinel = concat(basis_in_real_with_sentinel, zetamult(index));
+                    if (lindep(concattenated_basis_in_real_with_sentinel)[1] != 0,
+                        basis_in_real_with_sentinel = concattenated_basis_in_real_with_sentinel;
+                        basis = concat(basis, [index]))
+                )
+        ));
+        basis;
+}
+MZV_basis(5)
+*/
+    
+{
     for_each(weight, depth, func) =
         number_of_ones = depth;
         \\ The variable bitmask is initialized with the smallest possible number
